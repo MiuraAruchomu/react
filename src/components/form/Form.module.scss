@@ -1,0 +1,32 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 570px;
+    height: 100px;
+    margin-top: 25px;
+    padding: 0 40px;
+    border: 1px solid #a4a4a4;
+    border-radius: 15px;
+    outline: none;
+}
+
+.btn {
+    width: 200px;
+    height: 50px;
+    margin-top: 25px;
+    background-color: #f1f1f1;
+    border: 1px solid #a4a4a4;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+    &:hover {
+        background-color: #e0e0e0;
+    }
+    &:active {
+        background-color: #fff;
+    }
+}
