@@ -1,3 +1,37 @@
 .message {
-    background-color: #e3e3e3;
+    display: flex;
+    margin: 10px;
+    word-break: break-all;
+}
+
+.author {
+    height: max-content;
+    margin: 0 2px 0 2px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #a4a4a4;
+    word-break: keep-all;
+}
+
+.text {
+    margin-left: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+.author__bot {
+    height: max-content;
+    margin: 0 2px 0 2px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #ffef60;
+    word-break: keep-all;
+}
+
+.text__bot {
+    margin-left: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #fbf4b2;
 }
