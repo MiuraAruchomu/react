@@ -17,7 +17,7 @@ export const MessageList = ({ messages }) => {
   return (
     <div className={styles.list}>
       {messages.map((message) => {
-        return <Message message={message} />;
+        return <Message key={message.id} message={message} />;
       })}
       <div ref={ref} />
     </div>
