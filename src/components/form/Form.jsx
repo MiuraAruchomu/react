@@ -2,7 +2,7 @@ import styles from './Form.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 
-export const Form = ({ messages, setMessages }) => {
+export const Form = ({ setChats, chatId }) => {
   const [value, setValue] = useState('');
 
   const ref = useRef();
@@ -13,13 +13,16 @@ export const Form = ({ messages, setMessages }) => {
 
   const onSendMessage = (e) => {
     e.preventDefault();
-    const newMessage = {
-      author: 'Me',
-      text: value,
-      id: Date.now(),
-    };
-    const newMessages = [...messages, newMessage];
-    setMessages(newMessages);
+    setChats((prev) => {
+      const newMessage = {
+        author: 'Me',
+        text: value,
+        id: Date.now(),
+      };
+      const newChats = { ...prev };
+      newChats[chatId].messages.push(newMessage);
+      return newChats;
+    });
     setValue('');
   };
 
@@ -35,9 +38,6 @@ export const Form = ({ messages, setMessages }) => {
         value={value}
         ref={ref}
       />
-      {/* <button className={styles.btn} onClick={onSendMessage}>
-        SEND
-      </button> */}
       <Button
         variant='contained'
         type='button'
