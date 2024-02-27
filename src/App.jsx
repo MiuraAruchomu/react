@@ -1,59 +1,46 @@
 import styles from './App.module.scss';
 import { useEffect, useState } from 'react';
-import { MessageList } from './components/messageList/MessageList';
-import { Form } from './components/form/Form';
+import { Outlet, useParams } from 'react-router-dom';
 import { ChatList } from './components/chatList/ChatList';
+import { NoChat } from './components/noChat/NoChat';
+import { AddChat } from './components/addChat/AddChat';
 
 export const App = () => {
-  const [messageList, setMessageList] = useState([]);
-  const [chatList, setChatList] = useState({
-    'chat-1': {
-      id: 1,
-      name: 'chat1',
-    },
-    'chat-2': {
-      id: 2,
-      name: 'chat2',
-    },
-    'chat-3': {
-      id: 3,
-      name: 'chat3',
-    },
-    'chat-4': {
-      id: 4,
-      name: 'chat4',
-    },
-    'chat-5': {
-      id: 5,
-      name: 'chat5',
-    },
-    'chat-6': {
-      id: 6,
-      name: 'chat6',
-    },
-  });
+  const [chatList, setChatList] = useState({});
+
+  const { chatId } = useParams();
 
   useEffect(() => {
     if (
-      messageList.length !== 0 &&
-      messageList[messageList.length - 1].author !== 'Bot'
+      chatList.length !== 0 &&
+      chatList[chatId] &&
+      chatList[chatId].messages.length !== 0 &&
+      chatList[chatId].messages[chatList[chatId].messages.length - 1].author !==
+        'Bot'
     ) {
       setTimeout(() => {
-        const newBotMessage = {
-          author: 'Bot',
-          text: `Hello, I'am Bot :)`,
-          id: Date.now(),
-        };
-        const newMessages = [...messageList, newBotMessage];
-        setMessageList(newMessages);
+        setChatList((prev) => {
+          const newBotMessage = {
+            author: 'Bot',
+            text: `Hello, I'am Bot :)`,
+            id: Date.now(),
+          };
+          const newChats = { ...prev };
+          newChats[chatId].messages.push(newBotMessage);
+          return newChats;
+        });
       }, 500);
     }
-  }, [messageList]);
+  }, [chatList, chatId]);
   return (
     <div className={styles.app}>
-      <ChatList chats={chatList} />
-      <MessageList messages={messageList} />
-      <Form messages={messageList} setMessages={setMessageList} />
+      <AddChat setChats={setChatList} />
+      <ChatList chats={chatList} setChats={setChatList} />
+      {chatList[chatId] ? (
+        <Outlet context={[chatList, setChatList]} />
+      ) : (
+        <NoChat />
+      )}
     </div>
   );
 };

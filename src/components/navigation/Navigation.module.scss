@@ -1,0 +1,19 @@
+.navigation {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 25px;
+    background-color: #444;
+}
+
+.link {
+    height: 20px;
+    margin: 0 20px;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.5s;
+    &:hover {
+        font-size: 22px;
+    }
+}
