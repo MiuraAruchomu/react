@@ -1,9 +1,12 @@
 import styles from './Form.module.scss';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 
 export const Form = ({ setChats, chatId }) => {
   const [value, setValue] = useState('');
+
+  const author = useSelector((state) => state.profile.name);
 
   const ref = useRef();
 
@@ -15,7 +18,7 @@ export const Form = ({ setChats, chatId }) => {
     e.preventDefault();
     setChats((prev) => {
       const newMessage = {
-        author: 'Me',
+        author: author.value,
         text: value,
         id: Date.now(),
       };
