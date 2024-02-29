@@ -1,10 +1,17 @@
 import styles from './Form.module.scss';
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
+import { useParams } from 'react-router-dom';
+import { nanoid } from '@reduxjs/toolkit';
+import { sendMessage } from '../messageList/messageListSlice';
 
-export const Form = ({ setChats, chatId }) => {
+export const Form = () => {
   const [value, setValue] = useState('');
+
+  const dispatch = useDispatch();
+
+  const { chatId } = useParams();
 
   const author = useSelector((state) => state.profile.name);
 
@@ -16,16 +23,12 @@ export const Form = ({ setChats, chatId }) => {
 
   const onSendMessage = (e) => {
     e.preventDefault();
-    setChats((prev) => {
-      const newMessage = {
-        author: author.value,
-        text: value,
-        id: Date.now(),
-      };
-      const newChats = { ...prev };
-      newChats[chatId].messages.push(newMessage);
-      return newChats;
-    });
+    const newMessage = {
+      author: author.value,
+      text: value,
+      id: nanoid(),
+    };
+    dispatch(sendMessage({ id: chatId, message: newMessage }));
     setValue('');
   };
 

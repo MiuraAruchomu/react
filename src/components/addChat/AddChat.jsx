@@ -1,26 +1,25 @@
 import styles from './AddChat.module.scss';
 import { useState } from 'react';
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { addChat } from '../chatList/chatListSlice';
+import { addMessages } from '../messageList/messageListSlice';
 
-export const AddChat = ({ setChats }) => {
+export const AddChat = () => {
   const [value, setValue] = useState('');
+
+  const dispatch = useDispatch();
 
   const onChangeChatName = (e) => {
     setValue(e.target.value);
   };
   const onAddChat = (e) => {
     e.preventDefault();
-    setChats((prev) => {
-      const newChats = { ...prev };
-      const newId = Date.now();
-      newChats[newId] = {
-        id: newId,
-        name: value,
-        messages: [],
-      };
-      setValue('');
-      return newChats;
-    });
+    const newId = nanoid();
+    dispatch(addChat({ id: newId, name: value }));
+    dispatch(addMessages({ id: newId }));
+    setValue('');
   };
 
   return (
