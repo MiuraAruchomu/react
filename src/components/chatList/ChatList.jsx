@@ -6,15 +6,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeChat } from '../chatList/chatListSlice';
+import { removeMessages } from '../messageList/messageListSlice';
 
-export const ChatList = ({ chats, setChats }) => {
+export const ChatList = () => {
+  const chats = useSelector((state) => state.chats);
+
+  const dispatch = useDispatch();
+
   const onDeleteChat = (e) => {
     const id = e.target.id;
-    setChats((prev) => {
-      const newChats = { ...prev };
-      delete newChats[id];
-      return newChats;
-    });
+    dispatch(removeChat({ id }));
+    dispatch(removeMessages({ id }));
   };
 
   return (
